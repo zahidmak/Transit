@@ -1,0 +1,58 @@
+﻿@model IEnumerable<ZMBusService.Models.BusTripVM>
+@{
+    ViewBag.Title = "Bus Trips for " + Session["routeCode"].ToString() + " - " + Session["routeName"].ToString();
+}
+
+<h2>@ViewBag.Title</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.tripDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.startTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.driverFullName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.busNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.comments)
+        </th>
+        <th></th>
+    </tr>
+    @if (Model != null)
+    {
+
+        foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @String.Format("{0:dddd d MMM yyyy}", item.tripDate)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.startTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.driverFullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.busNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.comments)
+                </td>
+
+            </tr>
+        }
+
+    }
+
+</table>

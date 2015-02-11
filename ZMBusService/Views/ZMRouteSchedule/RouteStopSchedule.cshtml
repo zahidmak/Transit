@@ -1,0 +1,41 @@
+﻿@model IEnumerable<ZMBusService.Models.RouteScheduleVM>
+
+@{
+
+    ViewBag.Title = "Stop: " + Session["busStopId"].ToString() + " - " + Session["location"].ToString();
+}
+
+<h2>@ViewBag.Title</h2>
+<h3>Route: @ViewBag.busRouteCode - @ViewBag.routeName </h3>
+
+<h4>Mon-Fri</h4>
+<ul>
+    @foreach (var item in Model)
+    {
+
+        if (item.isWeekDay == true)
+        {
+
+            <li>
+                @(item.startTime + TimeSpan.FromMinutes((double)item.offset))
+            </li>
+        }
+
+    }
+</ul>
+
+<h4>Sat-Sun &amp; Holidays</h4>
+<ul>
+    @foreach (var item in Model)
+    {
+
+        if (item.isWeekDay == false)
+        {
+            <li>
+                @(item.startTime + TimeSpan.FromMinutes((double)item.offset))
+            </li>
+        }
+
+    }
+</ul>
+

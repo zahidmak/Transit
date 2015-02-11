@@ -1,0 +1,79 @@
+﻿@model ZMBusService.Models.trip
+
+@{
+    ViewBag.Title = "New Trip for " + Session["routeCode"].ToString() + " - " + Session["routeName"].ToString();
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("Create", "ZMTrip", FormMethod.Post))
+{
+    <style>
+        .field-validation-error {
+            color: #b94a48;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+    <hr />
+    <div class="col-md-offset-4  form-horizontal">
+        @Html.ValidationSummary(false, "", new { @class = "text-danger", style = "font-weight:700;" })
+
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.EditorForModel(Model)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(a => a.routeScheduleId)
+
+            @Html.DropDownList("routeScheduleId", (IEnumerable<SelectListItem>)ViewBag.routeSchedule, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.routeScheduleId, "", new { @class = "text-danger" })
+
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(a => a.driverId)
+
+            @Html.DropDownList("driverId", (IEnumerable<SelectListItem>)ViewBag.driver, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.driverId, "", new { @class = "text-danger" })
+
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(a => a.busId)
+            @{
+    int count = 1;
+            }
+            @foreach (var w in ViewBag.bus)
+            {
+                string busId = w.busId.ToString();
+                string busNumber = w.busNumber.ToString();
+                @Html.RadioButton(name: "busId", value: busId, htmlAttributes: new { id = "bus" + busNumber })
+                @Html.Label(expression: "bus" + busNumber, labelText: busNumber)
+                if (count % 5 == 0)
+                {
+                    <br />
+                }
+                count++;
+            }
+            @Html.ValidationMessageFor(model => model.busId, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+                @Html.ActionLink("Return to List", "Index")
+            </div>
+        </div>
+
+    </div>
+}
+<script>
+    $('.text-box').removeClass('text-box single-line').addClass("form-control"); //Removing the default classes of the fields and adding bootstrap class
+    $('.editor-label').removeClass('editor-label');
+    $('.editor-field').removeClass('editor-field').addClass("form-group");
+</script>
+
+
+

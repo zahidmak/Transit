@@ -1,0 +1,13 @@
+﻿
+@{
+    ViewBag.Title = "Select route to see schedule at " + Session["location"].ToString();
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using(Html.BeginForm("RouteStopSchedule","ZMRouteSchedule",FormMethod.Get))
+{
+    @Html.DropDownList("busRouteCode", new SelectList(ViewBag.busRouteCode, "Value", "Text"), "  -----Select-----  ")
+    <input type="submit" value="Submit" />
+    
+}
